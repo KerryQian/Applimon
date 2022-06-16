@@ -1,9 +1,35 @@
+import ghhops_server as hs
+from flask import Flask
 from flask import Flask
 from rhino3dm import *
 
 app = Flask(__name__)
 
+# @app.route('/')
+# def hello_world():
+#  return "hello from kerry test 1"
 
-@app.route('/')
-def hello_world():
-    return "hello from kerry test 1"
+
+# # register hops app as middleware
+# app = Flask(__name__)
+hops = hs.Hops(app)
+
+
+@hops.component(
+    "/pointat",
+    name="PointAt",
+    description="Get point along curve",
+    inputs=[
+        hs.HopsCurve("Curve", "C", "Curve to evaluate"),
+        hs.HopsNumber("t", "t", "Parameter on Curve to evaluate"),
+    ],
+    outputs=[
+        hs.HopsPoint("P", "P", "Point on curve at t")
+    ],
+)
+def pointat(curve: rhino3dm.Curve, t):
+    return curve.PointAt(t)
+
+
+if __name__ == "__main__":
+    app.run()
