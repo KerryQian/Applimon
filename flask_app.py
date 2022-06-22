@@ -1,14 +1,15 @@
-import ghhops_server as hs
-from flask import Flask
-import rhino3dm
-app = Flask(__name__)
 
-
-@app.route('/')
 # def hello_world():
 #  return "hello from kerry test 1"
 # # register hops app as middleware
 # app = Flask(__name__)
+from flask import Flask
+import ghhops_server as hs
+
+import rhino3dm
+
+# register hops app as middleware
+app = Flask(__name__)
 hops = hs.Hops(app)
 
 
