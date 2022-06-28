@@ -32,7 +32,7 @@ def scrape(link, main_text, tag):
 
     title = soup.title.text
     tags = soup.find(tag).get_text()
-    return title, tags
+    return tags
 
     # soup = BeautifulSoup(source, 'lxml')
     # # print(soup.prettify())
