@@ -31,7 +31,7 @@ def scrape(link, main_text, tag):
     main = soup.find(main_text)
 
     title = soup.title.text
-    tags = soup.find_all(tag).text
+    tags = soup.find_all(tag)
     return title, tags
 
     # soup = BeautifulSoup(source, 'lxml')
