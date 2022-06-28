@@ -12,14 +12,15 @@ hops = hs.Hops(app)
     description="Finds the title of a HTML",
     inputs=[
         hs.HopsString("HTML parser", "HTML", "Enter a url to scrape from"),
-        hs.HopsString("Main text", "Main text", "what is the main text div")
+        hs.HopsString("Main text", "Main text", "what is the main text div"),
+        hs.HopsString("Tags", "Tags", "tag to search for")
     ],
     outputs=[
         hs.HopsString("Title of HTML")
     ],
 )
 @app.route('/urlend')
-def scrape(link, main_text):
+def scrape(link, main_text, tag):
     from ast import Try
     from bs4 import BeautifulSoup
     import requests
@@ -30,11 +31,8 @@ def scrape(link, main_text):
     main = soup.find(main_text)
 
     title = soup.title.text
-    return title
-
-
-if __name__ == "__main__":
-    app.run()
+    tags = soup.find_all(tag).get_text
+    return title, tags
 
     # soup = BeautifulSoup(source, 'lxml')
     # # print(soup.prettify())
