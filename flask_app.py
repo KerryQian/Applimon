@@ -1,12 +1,5 @@
-
-# def hello_world():
-#  return "hello from kerry test 1"
-# # register hops app as middleware
-# app = Flask(__name__)
-from flask import Flask
+from flask import Flask, request
 import ghhops_server as hs
-
-import rhino3dm
 
 # register hops app as middleware
 app = Flask(__name__)
@@ -14,19 +7,64 @@ hops = hs.Hops(app)
 
 
 @hops.component(
-    "/pointat",
-    name="PointAt",
-    description="Get point along curve",
+    "/scrape",
+    name="scrape",
+    description="Finds the title of a HTML",
     inputs=[
-        hs.HopsCurve("Curve", "C", "Curve to evaluate"),
-        hs.HopsNumber("t", "t", "Parameter on Curve to evaluate"),
+        hs.HopsString("HTML parser", "HTML", "Enter a url to scrape from"),
+        hs.HopsString("Main text", "Main text", "what is the main text div")
     ],
     outputs=[
-        hs.HopsPoint("P", "P", "Point on curve at t")
+        hs.HopsString("Title of HTML")
     ],
 )
-def pointat(curve: rhino3dm.Curve, t):
-    return curve.PointAt(t)
+@app.route('/urlend')
+def scrape(link, main_text):
+    from ast import Try
+    from bs4 import BeautifulSoup
+    import requests
+    import csv
+
+    source = requests.get(link)
+    soup = BeautifulSoup(source.text, "html.parser")
+    main = soup.find(main_text)
+
+    title = soup.title.text
+    return title
+
+
+if __name__ == "__main__":
+    app.run()
+
+    # soup = BeautifulSoup(source, 'lxml')
+    # # print(soup.prettify())
+
+    # csv_file = open('cms_scrape.csv', 'w')
+
+    # csv_writer = csv.writer(csv_file)
+    # csv_writer.writerow(['headline', 'summary', 'video_link'])
+
+    # for article in soup.find_all('article'):
+    #     headline = article.h2.a.text
+    #     print(headline)
+
+    #     summary = article.find('div', class_='entry-content').p.text
+    #     print(summary)
+
+    #     try:
+    #         vid_src = article.find('iframe', class_='youtube-player')['src']
+
+    #         vid_id = vid_src.split('/')[4]
+    #         vid_id = vid_id.split('?')[0]
+
+    #         yt_link = f'https://youtube.com/watch?v={vid_id}'
+    #     except Exception as e:
+    #         yt_link = None
+
+    #     print()
+    #     csv_writer.writerow([headline, summary, yt_link])
+
+    # csv_file.close()
 
 
 if __name__ == "__main__":
