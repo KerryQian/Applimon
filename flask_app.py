@@ -13,15 +13,14 @@ hops = hs.Hops(app)
     inputs=[
         hs.HopsString("HTML parser", "HTML", "Enter a url to scrape from"),
         # hs.HopsString("Main text", "Main text", "what is the main text div"),
-        hs.HopsString("Tags", "Tags", "tag to search for"),
-        hs.HopsString("All Tags", "All Tags", "Find all tags within html")
+        hs.HopsString("Tags", "Tags", "tag to search for")
     ],
     outputs=[
         hs.HopsString("Result")
     ],
 )
 @app.route('/urlend')
-def scrape(link, tag, tags):
+def scrape(link, tag):
     from ast import Try
     from bs4 import BeautifulSoup
     import requests
@@ -32,11 +31,10 @@ def scrape(link, tag, tags):
     # main = soup.find(main_text).get_text()
 
     match = soup.find(tag).text
-    all_tags = soup.find_all(tags)
-    result = match, all_tags
+    result = match
     print(result)
 
-    return list(result)
+    return result
     # soup = BeautifulSoup(source, 'lxml')
     # # print(soup.prettify())
 
