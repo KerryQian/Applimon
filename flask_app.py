@@ -13,7 +13,8 @@ hops = hs.Hops(app)
     inputs=[
         hs.HopsString("HTML parser", "HTML", "Enter a url to scrape from"),
         # hs.HopsString("Main text", "Main text", "what is the main text div"),
-        hs.HopsString("Tags", "Tags", "tag to search for")
+        hs.HopsString("Tags", "Tags", "tag to search for"),
+        hs.HopsString("All Tags", "All Tags", "Find all tags within html")
     ],
     outputs=[
         hs.HopsString("Result")
@@ -31,8 +32,10 @@ def scrape(link, tag):
     # main = soup.find(main_text).get_text()
 
     match = soup.find(tag).text
-    result = match
+    all_tags = soup.find_all(tag).text
+    result = match, all_tags
     print(result)
+
     return result
     # soup = BeautifulSoup(source, 'lxml')
     # # print(soup.prettify())
