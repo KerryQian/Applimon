@@ -32,7 +32,7 @@ def scrape(link, tag, tags):
     # main = soup.find(main_text).get_text()
 
     match = soup.find(tag).text
-    all_tags = soup.find_all(tags).text
+    all_tags = soup.find_all(tags)
     result = match, all_tags
     print(result)
 
