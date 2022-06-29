@@ -30,7 +30,7 @@ def scrape(link, tag):
     soup = BeautifulSoup(source.text, "html.parser")
     # main = soup.find(main_text).get_text()
 
-    match = soup.find(tag)
+    match = soup.find(tag).text
     result = match
     print(result)
 
