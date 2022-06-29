@@ -21,7 +21,7 @@ hops = hs.Hops(app)
     ],
 )
 @app.route('/urlend')
-def scrape(link, tag):
+def scrape(link, tag, tags):
     from ast import Try
     from bs4 import BeautifulSoup
     import requests
@@ -32,7 +32,7 @@ def scrape(link, tag):
     # main = soup.find(main_text).get_text()
 
     match = soup.find(tag).text
-    all_tags = soup.find_all(tag).text
+    all_tags = soup.find_all(tags).text
     result = match, all_tags
     print(result)
 
