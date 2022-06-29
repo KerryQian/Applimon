@@ -34,7 +34,7 @@ def scrape(link, tag, tags):
     match = soup.find(tag).text
     all_tags = soup.find_all(tags)
     result = match, all_tags
-    print(result)
+    print(list(result))
 
     return result
     # soup = BeautifulSoup(source, 'lxml')
