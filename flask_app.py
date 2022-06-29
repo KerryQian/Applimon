@@ -9,7 +9,7 @@ hops = hs.Hops(app)
 @hops.component(
     "/scrape",
     name="scrape",
-    description="Finds the title of a HTML",
+    description="Filters HTML by tags",
     inputs=[
         hs.HopsString("HTML parser", "HTML", "Enter a url to scrape from"),
         # hs.HopsString("Main text", "Main text", "what is the main text div"),
